@@ -15,14 +15,12 @@ const routes = require('./routes/routes');
 app.use('', routes)
 
 const mongoString = process.env.DATABASE_URL
+mongoose.connect(mongoString);
+const database = mongoose.connection
+database.on('error', (error) => {
+    console.log(error)
+})
 
-async function dbConnection(){
-    try{
-        await mongoose.connect(mongoString).then(() => console.log('Connected to database'));
-    }
-    catch(err){
-        return {'status':'FAILED','msg':err};
-    }
-}
-
-dbConnection()
+database.once('connected', () => {
+    console.log('Database Connected');z
+})
