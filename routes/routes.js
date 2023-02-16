@@ -28,12 +28,13 @@ router.post('/addcost', async (req, res) => {
     })
     cost_id++
 
-    await cost.save().then((response) => {
-        res.send("cost saved")
-    }).catch((response) =>
-    {
-        res.send("error occurred")
-    })
+    try {
+        const dataToSave = await cost.save();
+        res.status(200).json(dataToSave)
+    }
+    catch (error) {
+        res.status(400).json({message: error.message})
+    }
 
     const my_category = req.body.category
     const doc = await Category.findOne()
