@@ -37,7 +37,7 @@ router.post('/addcost', async (req, res) => {
     }
 
     const my_category = req.body.category
-    const doc = await Category.findOne()
+    const doc = Category.findOne()
 
     if (my_category == "food"){
         doc.food.push(cost)
